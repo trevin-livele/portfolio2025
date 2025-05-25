@@ -7,23 +7,25 @@
 <link rel="stylesheet" href="./css/style.css">
   </head>
   <body>
-    <header>
-      <div class="container">
-        <div class="logo">TREV</div>
-        <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
-        <nav>
-          <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#journey">Journey</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#goals">Future Goals</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li>
-              <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
-            </li>
-          </ul>
-        </nav>
-      </div>
+<header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">TREV</div>
+                <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+                <nav id="navigation">
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#journey">Journey</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#goals">Future Goals</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li>
+                            <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -362,45 +364,6 @@
     </div>
 
     <script>
-      // Theme Toggle
-      const themeToggle = document.querySelector(".theme-toggle");
-      const body = document.body;
-
-      themeToggle.addEventListener("click", () => {
-        body.classList.toggle("light-mode");
-
-        if (body.classList.contains("light-mode")) {
-          themeToggle.textContent = "☀️";
-          localStorage.setItem("theme", "light");
-        } else {
-          themeToggle.textContent = "🌙";
-          localStorage.setItem("theme", "dark");
-        }
-      });
-
-      // Check for saved theme preference
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "light") {
-        body.classList.add("light-mode");
-        themeToggle.textContent = "☀️";
-      }
-
-      // Mobile Navigation
-      const navToggle = document.querySelector(".nav-toggle");
-      const nav = document.querySelector("nav");
-
-      navToggle.addEventListener("click", () => {
-        nav.classList.toggle("active");
-      });
-
-      // Close mobile nav when clicking a link
-      const navLinks = document.querySelectorAll("nav a");
-      navLinks.forEach((link) => {
-        link.addEventListener("click", () => {
-          nav.classList.remove("active");
-        });
-      });
-
       // Smooth scrolling
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
@@ -516,5 +479,47 @@
         setTimeout(typeWriter, 1000);
       });
     </script>
+
+
+
+
+<script>
+        // Mobile navigation toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navigation = document.querySelector('#navigation');
+
+        navToggle.addEventListener('click', () => {
+            navigation.classList.toggle('nav-open');
+            navToggle.textContent = navigation.classList.contains('nav-open') ? '✕' : '☰';
+        });
+
+        // Close mobile navigation when clicking on a link
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navigation.classList.remove('nav-open');
+                navToggle.textContent = '☰';
+            });
+        });
+
+        // Theme toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            themeToggle.textContent = body.classList.contains('light-mode') ? '☀️' : '🌙';
+        });
+
+        // Close mobile navigation when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navigation.contains(e.target) && !navToggle.contains(e.target)) {
+                navigation.classList.remove('nav-open');
+                navToggle.textContent = '☰';
+            }
+        });
+    </script>
+
+
   </body>
 </html>
